@@ -3,9 +3,11 @@ const headers = new fetch.Headers();
 
 const baseUrl = 'https://api.figma.com';
 
-module.exports = async function fetchProject(fileId, token, nodeIds = []) {
+module.exports = async function fetchProject(fileId, token, nodeIds = [], depth) {
   headers.set('X-Figma-Token', token);
-  let resp = await fetch(`${baseUrl}/v1/files/${fileId}?${nodeIds.join(',')}`, 
+  let url = `${baseUrl}/v1/files/${fileId}${nodeIds.length ? 
+      `/nodes?ids=${nodeIds.join(',')}` : ''}${depth ? `?depth=${depth}` : ``}`
+  let resp = await fetch(url, 
     {headers});
   let data = await resp.json();
   return data;
