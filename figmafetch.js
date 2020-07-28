@@ -16,7 +16,6 @@ module.exports = async function fetchProject(fileId, token, nodeIds = [], depth 
       url += `?depth=${depth}`
     }
   }
-  console.log('fetch url: ', url);
   let resp = await fetch(url, 
     {headers});
   let data = await resp.json();
